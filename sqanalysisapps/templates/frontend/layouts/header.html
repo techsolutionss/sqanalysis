@@ -1,0 +1,102 @@
+{% load static i18n %}
+<!-- header begin -->
+<div class="header animated">
+    <div class="top-bar topbar-transparent">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-xl-5 col-lg-5 col-md-7">
+                    <div class="left-side">
+                         
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-5 col-md-5">
+                    <div class="right-side">
+                        <div class="single-bar">
+                            <span class="part-icon">
+                                <i class="fa-regular fa-calendars"></i>
+                            </span>
+                            <span class="part-text">
+                                <span id="date"></span>
+                                <span id="month"></span>
+                                <span id="year"></span>
+                            </span>
+                        </div>
+                        <div class="single-bar">
+                            <span class="part-icon">
+                                <i class="fa-solid fa-timer"></i>
+                            </span>
+                            <span class="part-text"><span class="timer" id="hours"></span>:<span class="timer" id="minutes"></span>:<span class="timer" id="seconds"></span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mobile-navbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-6 col-xl-none col-lg-none col-md-block d-flex align-items-center">
+                    <a class='mobile-logo' href='index.html'>
+                        S<span class="gold-q">Q</span>-analysis<span class="gold-q">.</span>
+                    </a>
+                </div>
+                <div class="col-6 col-xl-none col-lg-none col-lg-block">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa-light fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mainmenu">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="scalation">
+                        <div class="row">
+                            <div class="col-xl-5 col-lg-5">
+                                <a class='sq-logo' href='index.html'>
+                                    S<span class="gold-q">Q</span>-analysis<span class="gold-q">.</span>
+                                </a>
+                                <ul class="navbar-nav nn-left">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle active" href="#" id="home-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Home
+                                        </a>
+                                    </li>
+                                    <!-- <li class="nav-item">
+                                        <a class='nav-link' href='about.html'>about us</a>
+                                    </li>
+                                     
+                                    <li class="nav-item">
+                                        <a class='nav-link' href='contact.html'>contact us</a>
+                                    </li> -->
+                                </ul>
+                            </div>
+                            <div class="col-2 col-lg-2 d-xl-block d-lg-block d-md-none">
+                                <!-- <div class="logo">
+                                    <a href='index.html'>
+                                        <img src="{% static 'assets/img/logo/logo-1.png '%}" alt="">
+                                    </a>
+                                </div> -->
+                            </div>
+                            <div class="col-xl-5 col-lg-5">
+                                <!-- <ul class="navbar-nav nn-right">
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            pages
+                                        </a>
+                                        
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class='nav-link' href='faq.html'>faq</a>
+                                    </li>
+                                </ul> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>

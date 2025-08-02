@@ -1,0 +1,272 @@
+<!-- templates/blog/post_detail.html -->
+{% extends 'frontend/base.html' %}
+{% load i18n static %}
+
+{% block extra_css %}
+    <style>
+        .post-img img {
+            max-width: 800px;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+        }
+        .post-img {
+            margin-bottom: 20px;
+        }
+        .single-blog img {
+            max-width: 100%;
+            height: auto;
+        }
+        .post-category {
+            font-size: 14px;
+            color: #555;
+            text-transform: uppercase;
+        }
+        .post-title {
+            margin: 10px 0;
+        }
+        .post-stats {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .author-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .author-pic img {
+            border-radius: 50%;
+        }
+        .posted-time {
+            font-size: 14px;
+            color: #777;
+        }
+        .post-comment-form {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .post-comment-form form {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+        }
+        .post-comment-form input,
+        .post-comment-form textarea {
+            padding: 8px;
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .post-comment-form button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .post-comment-form button:hover {
+            background-color: #0056b3;
+        }
+        .post-comment-form .errorlist {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .single-comment {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .commentor-pic img {
+            border-radius: 50%;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="prd-breadcrumb">
+    <div class="container">
+        <div class="brd-content">
+            <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="500" data-aos-easing="ease-in">
+                <span class="sub-title">Details</span>
+            </div>    
+            <h2 class="title" data-aos="fade-up" data-aos-delay="350" data-aos-duration="500" data-aos-easing="ease-in">{{ post.title }}</h2>
+            <div class="page-direction">
+                <ul>
+                    <li>
+                        <span class="icon"><i class="fa-solid fa-house"></i></span>
+                        <span class="text"><a href="{% url 'sqblog:post_list' %}">Home</a></span>
+                    </li>
+                    <li>
+                        <span class="icon"><i class="fa-light fa-caret-right fa-xl"></i></span>
+                        <span class="text">blog details</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="blog-details">
+    <div class="global-shape style-3">
+        <img src="{% static 'img/shapes/shape-1.png' %}" alt="" data-aos="fade-left" data-aos-duration="500" data-aos-offset="200" data-aos-easing="ease-in" data-aos-delay="400">
+    </div>
+    <div class="container">
+        <div class="post-element">
+            <div class="post-stats" data-aos="fade-up" data-aos-delay="100" data-aos-duration="500" data-aos-easing="ease-in">
+                {% if post.categories.all %}
+                    <span class="category-name">{{ post.categories.first.name }}</span>
+                {% else %}
+                    <span class="category-name">Uncategorized</span>
+                {% endif %}
+                <span class="posted-time">{{ post.pub_date|timesince }} ago</span>
+            </div>
+            <h2 class="post-title" data-aos="fade-up" data-aos-delay="150" data-aos-duration="500" data-aos-easing="ease-in">
+                <span>{{ post.title }}</span>
+            </h2>
+            <div class="author-info" data-aos="fade-up" data-aos-delay="200" data-aos-duration="500" data-aos-easing="ease-in">
+                <div class="author-pic">
+                    <img src="{% static 'img/blog/avatar.jpg' %}" alt="">
+                </div>
+                <div class="author-descr">
+                    <span class="auth-name">{{ post.author.get_full_name|default:post.author.username }}</span>
+                    <span class="break-icon">/</span>
+                    <span class="auth-designation">Author</span>
+                </div>
+            </div>
+            <div class="post-img" data-aos="fade-up" data-aos-delay="250" data-aos-duration="500" data-aos-easing="ease-in">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                {% else %}
+                    <img src="{% static 'img/blog/blog-details.jpg' %}" alt="">
+                {% endif %}
+            </div>
+            <div data-aos="fade-up" data-aos-delay="300" data-aos-duration="500" data-aos-easing="ease-in">
+                {{ post.content|safe }}
+            </div>
+        </div>
+        <div class="post-comment-element">
+            <div class="post-comment-form" data-aos="fade-up" data-aos-delay="550" data-aos-duration="500" data-aos-easing="ease-in">
+                <div class="commentor-pic">
+                    <img src="{% static 'img/blog/avatar.jpg' %}" alt="">
+                </div>
+                <div class="part-form">
+                    <form method="post" action="{% url 'sqblog:comment_create' slug=post.slug %}">
+                        {% csrf_token %}
+                        {% if comment_form.errors %}
+                            <div class="errorlist">
+                                {% for field in comment_form %}
+                                    {% for error in field.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                {% endfor %}
+                                {% for error in comment_form.non_field_errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {{ comment_form.as_p }}
+                        <button type="submit">
+                            <i class="fa-light fa-feather"></i> Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="all-comments" data-aos="fade-up" data-aos-delay="600" data-aos-duration="500" data-aos-easing="ease-in">
+                <h4 class="element-titl">
+                    <span>All comments ({{ comments.count }})</span>
+                </h4>
+                <div>
+                    {% for comment in comments %}
+                        <div class="single-comment">
+                            <div class="commentor-pic">
+                                <img src="{% static 'img/blog/avatar.jpg' %}" alt="">
+                            </div>
+                            <div class="part-comment-info">
+                                <div class="comment-stats">
+                                    <span class="commentator-name">{{ comment.name }}</span>
+                                    <span class="commented-time">{{ comment.created_at|timesince }} ago</span>
+                                </div>
+                                <p>{{ comment.content }}</p>
+                                <div class="comment-into-social">
+                                    <a href="#0" class="single-social love-reaction">
+                                        <span class="icon love-icon"><i class="fa-regular fa-heart"></i></span>
+                                        <span class="social-text loved-number">0</span>
+                                    </a>
+                                    <a href="#0" class="single-social">
+                                        <span class="icon comment-icon"><i class="fa-regular fa-comment"></i></span>
+                                        <span class="social-text">Comment</span>
+                                    </a>
+                                    <a href="#0" class="single-social">
+                                        <span class="icon share-icon"><i class="fa-regular fa-paper-plane"></i></span>
+                                        <span class="social-text">Share</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>No comments yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="recommended-post-element" data-aos="fade-up" data-aos-delay="550" data-aos-duration="500" data-aos-easing="ease-in">
+            <h4 class="element-title">
+                <span>Recommended articles</span>
+            </h4>
+            <div class="recommended-post-slider owl-carousel owl-theme">
+                {% for recent_post in recent_posts %}
+                    <div class="single-blog">
+                        <div class="part-img">
+                            {% if recent_post.image %}
+                                <img src="{{ recent_post.image.url }}" alt="{{ recent_post.title }}">
+                            {% else %}
+                                <img src="{% static 'img/blog/blog-post-1.jpg' %}" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="part-text">
+                            {% if recent_post.categories.all %}
+                                <span class="post-category">{{ recent_post.categories.first.name }}</span>
+                            {% else %}
+                                <span class="post-category">Uncategorized</span>
+                            {% endif %}
+                            <h3 class="blog-post-title">
+                                <a href="{% url 'sqblog:post_detail' slug=recent_post.slug %}">{{ recent_post.title }}</a>
+                            </h3>
+                            <div class="post-info-stats">
+                                <a href="#0" class="post-creator">
+                                    <div class="creator-pic">
+                                        <img src="{% static 'img/blog/avatar.jpg' %}" alt="">
+                                    </div>
+                                    <span class="creator-name">{{ recent_post.author.get_full_name|default:recent_post.author.username }}</span>
+                                </a>
+                                <span class="posting-time">{{ recent_post.pub_date|timesince }} ago</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        $(document).ready(function(){
+            $('.recommended-post-slider').owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: false,
+                items: 2,
+                autoplay: true,
+                autoplayTimeout: 3000,
+            });
+        });
+    </script>
+{% endblock %}
