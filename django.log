@@ -1389,3 +1389,17 @@ WARNING 2025-08-02 09:36:46,426 log8076 14380 Not Found: /post/new-thingsn/stati
 WARNING 2025-08-02 09:36:46,586 log8076 9380 Not Found: /serviceworker.js
 WARNING 2025-08-02 09:36:46,926 log8076 25684 Not Found: /manifest.json
 WARNING 2025-08-02 09:36:47,428 log8076 14380 Not Found: /post/new-thingsn/static/cartel_app_logo/android/android-launchericon-512-512.png
+INFO 2025-08-02 21:41:38,009 autoreload7688 23132 Watching for file changes with StatReloader
+WARNING 2025-08-02 21:41:47,826 log7688 27440 Not Found: /manifest.json
+WARNING 2025-08-02 21:41:49,126 log7688 4700 Not Found: /serviceworker.js
+WARNING 2025-08-02 21:41:52,343 log7688 4700 Not Found: /post/new-thingsn/index.html
+WARNING 2025-08-02 21:41:53,674 log7688 4700 Not Found: /favicon.ico
+WARNING 2025-08-02 21:41:55,766 log7688 18440 Not Found: /serviceworker.js
+WARNING 2025-08-02 21:42:05,711 log7688 4188 Not Found: /manifest.json
+WARNING 2025-08-02 21:42:07,427 log7688 1784 Not Found: /serviceworker.js
+WARNING 2025-08-02 21:42:45,380 log7688 21948 Not Found: /serviceworker.js
+WARNING 2025-08-02 21:42:58,453 log7688 25820 Not Found: /post/base-ball-analysis/static/cartel_app_logo/android/android-launchericon-512-512.png
+WARNING 2025-08-02 21:42:59,002 log7688 24820 Not Found: /manifest.json
+WARNING 2025-08-02 21:42:59,177 log7688 25820 Not Found: /post/base-ball-analysis/static/cartel_app_logo/android/android-launchericon-512-512.png
+WARNING 2025-08-02 21:43:00,369 log7688 25820 Not Found: /serviceworker.js
+WARNING 2025-08-02 21:43:38,224 log7688 7972 Not Found: /serviceworker.js
