@@ -93,6 +93,7 @@ THIRD_PARTY_APPS = [
     "user_visit",
     "phonenumber_field",
     'pwa',
+    'django_bleach',
 ]
 
 LOCAL_APPS = [
@@ -344,5 +345,16 @@ PWA_APP_SPLASH_SCREEN = [
 ]
 PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'en-US'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'extraPlugins': ','.join(['codesnippet']),
+        'forcePasteAsPlainText': True,  # Prevents rich text paste issues
+        'removePlugins': 'autogrow',  # Optional: Reduce auto-formatting
+        'format_tags': 'p;h1;h2;h3;pre',  # Limit formatting options
+    },
+}
 
-
+BLEACH_ALLOWED_TAGS = ['p', 'div', 'span', 'pre', 'code', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
+BLEACH_ALLOWED_ATTRIBUTES = {'code': ['class'], 'pre': ['class']}
+BLEACH_STRIP_TAGS = False

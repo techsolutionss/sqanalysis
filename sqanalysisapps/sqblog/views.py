@@ -1,4 +1,3 @@
-# blog/views.py
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Post, Category, Tag
@@ -42,6 +41,8 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = CommentForm()
         context['comments'] = self.object.comments.filter(approved=True)
+        context['categories'] = Category.objects.all()
+        context['recent_posts'] = Post.objects.select_related('author').prefetch_related('categories').order_by('-pub_date').exclude(id=self.object.id)[:3]
         return context
 
 class CommentCreateView(View):

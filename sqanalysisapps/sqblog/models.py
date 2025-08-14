@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
+import html
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
