@@ -17512,9 +17512,9 @@ ul {
 .blog-posts .single-blog .part-text p {
   margin-bottom: 19px;
   font-weight: 400;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 33px;
-  color: #5C6172;
+  color: #000;
 }
 
 @media (max-width: 479.98px) {
