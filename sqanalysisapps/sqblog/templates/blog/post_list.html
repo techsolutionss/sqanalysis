@@ -1,20 +1,16 @@
-<!-- blog/templates/blog/post_list.html -->
 {% extends 'frontend/base.html' %}
 {% load i18n static %}
 
 {% block extra_css %}
-    <!-- <link rel="stylesheet" href="{% static 'blog/css/styles.css' %}"> -->
-     <style>
- 
-
+    <style>
         h1, h2, h3, h4, h5 {
             color: #333;
         }
 
-   
-        .single-blog img {
-            max-width: 100%;
-            height: auto;
+        .single-blog .part-img img {
+            width: 209px;
+            height: 200px;
+            object-fit: cover; /* Matches rendered size 209x200, handles 784x752 intrinsic */
         }
 
         .single-blog a {
@@ -73,12 +69,6 @@
             margin-bottom: 20px;
         }
 
-        .single-recent-post {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
         .single-recent-post .part-img img {
             width: 80px;
             height: 80px;
@@ -89,7 +79,6 @@
             list-style: none;
             padding: 0;
         }
-    
 
         .tag-words a {
             display: inline-block;
@@ -143,10 +132,24 @@
         .pok-pagination .dotted {
             padding: 8px 12px;
         }
-        .su-t{
+
+        .su-t {
             color: #FFFFFF;
         }
-     </style>
+
+        /* Responsive adjustments */
+        @media (max-width: 767px) {
+            .recent-posts-section {
+                display: none; /* Hide recent posts on mobile */
+            }
+
+            .single-blog .part-img img {
+                width: 180px; /* Slightly smaller for mobile */
+                height: 172px; /* Maintains 49:47 aspect ratio (180/172 ≈ 209/200) */
+                object-fit: cover;
+            }
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -187,7 +190,7 @@
                                         {% if post.image %}
                                             <img src="{{ post.image.url }}" alt="{{ post.title }}">
                                         {% else %}
-                                            <img src="{% static 'img/blog/blog-post-1.jpg' %}" alt="">
+                                            <img src="{% static 'img/blog/blog-post-2.jpg' %}" alt="">
                                         {% endif %}
                                     </a>
                                 </div>
@@ -198,7 +201,7 @@
                                         <span class="post-category">Uncategorized</span>
                                     {% endif %}
                                     <h3 class="blog-post-title">
-                                        <a href="{% url 'sqblog:post_detail' slug=post.slug %}">{{ post.title }}
+                                        <a href="{% url 'sqblog:post_detail' slug=post.slug %}">{{ post.title }}</a>
                                     </h3>
                                     <p>{{ post.content|safe|truncatewords_html:30 }}</p>
                                     <div class="post-info-stats">
@@ -221,42 +224,44 @@
                 </div>
             </div>
             <div class="col-xl-4 col-lg-12">
-                <div class="row g-4">
-                    {% for recent_post in recent_posts|slice:":2" %}
-                        <div class="col-xl-12 col-lg-12 col-md-6" data-aos="fade-up" data-aos-delay="{% cycle '100' '150' %}" data-aos-duration="500" data-aos-easing="ease-in">
-                            <div class="single-blog vertical-style">
-                                <div class="part-img">
-                                    <a href="{% url 'sqblog:post_detail' slug=recent_post.slug %}">
-                                        {% if recent_post.image %}
-                                            <img src="{{ recent_post.image.url }}" alt="{{ recent_post.title }}">
-                                        {% else %}
-                                            <img src="{% static 'img/blog/blog-post-2.jpg' %}" alt="">
-                                        {% endif %}
-                                    </a>
-                                </div>
-                                <div class="part-text">
-                                    {% if recent_post.categories.all %}
-                                        <span class="post-category">{{ recent_post.categories.first.name }}</span>
-                                    {% else %}
-                                        <span class="post-category">Uncategorized</span>
-                                    {% endif %}
-                                    <h3 class="blog-post-title">
-                                        <a href="{% url 'sqblog:post_detail' slug=recent_post.slug %}">{{ recent_post.title }}</a>
-                                    </h3>
-                                    <p>{{ recent_post.content|safe|truncatewords_html:30 }}</p>
-                                    <div class="post-info-stats">
-                                        <a href="#0" class="post-creator">
-                                            <div class="creator-pic">
-                                                <img src="{% static 'img/blog/avatar.jpg' %}" alt="">
-                                            </div>
-                                            <span class="creator-name">{{ recent_post.author.get_full_name|default:recent_post.author.username }}</span>
+                <div class="recent-posts-section">
+                    <div class="row g-4">
+                        {% for recent_post in recent_posts|slice:":2" %}
+                            <div class="col-xl-12 col-lg-12 col-md-6" data-aos="fade-up" data-aos-delay="{% cycle '100' '150' %}" data-aos-duration="500" data-aos-easing="ease-in">
+                                <div class="single-blog vertical-style">
+                                    <div class="part-img">
+                                        <a href="{% url 'sqblog:post_detail' slug=recent_post.slug %}">
+                                            {% if recent_post.image %}
+                                                <img src="{{ recent_post.image.url }}" alt="{{ recent_post.title }}">
+                                            {% else %}
+                                                <img src="{% static 'img/blog/blog-post-2.jpg' %}" alt="">
+                                            {% endif %}
                                         </a>
-                                        <span class="posting-time">{{ recent_post.pub_date|timesince }} ago</span>
+                                    </div>
+                                    <div class="part-text">
+                                        {% if recent_post.categories.all %}
+                                            <span class="post-category">{{ recent_post.categories.first.name }}</span>
+                                        {% else %}
+                                            <span class="post-category">Uncategorized</span>
+                                        {% endif %}
+                                        <h3 class="blog-post-title">
+                                            <a href="{% url 'sqblog:post_detail' slug=recent_post.slug %}">{{ recent_post.title }}</a>
+                                        </h3>
+                                        <p>{{ recent_post.content|safe|truncatewords_html:30 }}</p>
+                                        <div class="post-info-stats">
+                                            <a href="#0" class="post-creator">
+                                                <div class="creator-pic">
+                                                    <img src="{% static 'img/blog/avatar.jpg' %}" alt="">
+                                                </div>
+                                                <span class="creator-name">{{ recent_post.author.get_full_name|default:recent_post.author.username }}</span>
+                                            </a>
+                                            <span class="posting-time">{{ recent_post.pub_date|timesince }} ago</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
